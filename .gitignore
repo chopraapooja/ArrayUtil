@@ -1,0 +1,5 @@
+*.exe
+*.o
+*TestRunner.c
+*TestRunner.exe
+spike.c
