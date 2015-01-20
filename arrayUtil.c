@@ -63,3 +63,14 @@ void dispose(ArrayUtil util){
 	free(util.base);
 }
 
+void* findFirst(ArrayUtil util, MatchFunc* match, void* hint){
+	int i,doesMatch;
+	void *result;
+	for (i = 0; i < util.length; ++i)
+	{
+		doesMatch = match(hint,util.base+(util.typeSize*i));
+		if(doesMatch){
+			return  util.base+(util.typeSize*i);
+		}
+	}
+}

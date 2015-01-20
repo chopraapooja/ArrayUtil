@@ -120,3 +120,31 @@ void test_resize_should_not_change_length_of_array_when_new_size_is_same_as_old_
 	dispose(a);
 }
 
+void test_findFirst_on_providing_matchFunc_isEven_should_give_the_first_even_element_found_in_utilArray(){
+	ArrayUtil array = create(sizeof(int),5);
+	int arr[] = {1,2,3,4,5},*result;
+
+	int isEven(void *hint, void *item){
+		int *numberPtr = (int*)item;
+		return *numberPtr % 2 ? 0 : 1;
+	}
+	array.base = arr;
+	result = (int*)findFirst(array,isEven,'\0');
+	assert(*result == 2);
+}
+
+
+void test_findFirst_on_providing_matchFunc_isDivisble_with_3_should_give_the_first_element_found_tobe_divisble_by_3__in_utilArray(){
+	ArrayUtil array = create(sizeof(int),5);
+	int arr[] = {1,2,3,4,5},*result,divisor = 3;
+
+	int isDivisible(void *hint, void *item){
+		int *numberPtr = (int*)item;
+		int *hintPtr = (int*)hint;
+		return *numberPtr % *hintPtr ? 0 : 1;
+	}
+	array.base = arr;
+	result = (int*)findFirst(array,isDivisible,&divisor);
+	assert(*result == 3);
+}
+
