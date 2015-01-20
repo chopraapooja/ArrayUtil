@@ -78,6 +78,7 @@ void test_create_should_set_the_length_and_typeSize_fields_of_array_to_the_value
 	ArrayUtil a = create(1,3);
 	assert(a.length == 3);
 	assert(a.typeSize == 1);
+	free(a.base);
 }
 
 void test_create_the_array_contents_will_all_be_set_to_zero(){
@@ -87,26 +88,40 @@ void test_create_the_array_contents_will_all_be_set_to_zero(){
 	{
 		assert(((char*)a.base)[i] == 0);
 	}
+	free(a.base);
 }
 
-// void test_create(){
-// 	ArrayUtil intArray, charArray, floatArray, customArray;
-// 	int i;
-// 	intArray = create(sizeof(int), 5);
-// 	charArray = create(sizeof(char), 5);
-// 	floatArray = create(sizeof(float), 5);
-// 	customArray = create(8, 5);
+void test_resize_should_grow_length_of_array_and_set_them_to_zero_when_new_size_is_more(){
+	ArrayUtil a = create(4,2);
+	int i;
+	a = resize(a,5);
+	assert(a.length == 5);
+	for (i = 0; i < 20; ++i)
+	{
+		assert(((char*)a.base)[i] == 0);
+	}
+	free(a.base);
+}
 
-// 	int intArr[] = {1,2,3,4,5};
-// 	float floatArr[] = {1.5,2.5,3.5,4.5,5.5};
-// 	char charArr[] = {'a','b','c','d','e'};
-// 	char *strings[] = {"Bananana","Bananana","Bananana","Bananana","Bananana"};
 
-// 	intArray.base = (void*)intArr;
-// 	charArray.base = (void*)charArr;
-// 	floatArray.base = (void*)floatArr;
-// 	customArray.base = (void*)strings;
-// }
+void test_resize_should_shrink_length_of_array_when_new_size_is_less(){
+	ArrayUtil a = create(1,5);
+	int i;
+	a = resize(a,3);
+	assert(a.length == 3);
+	free(a.base);
+}
+
+void test_resize_should_not_change_length_of_array_when_new_size_is_same_as_old_size(){
+	ArrayUtil a = create(1,5);
+	int i;
+	a = resize(a,5);
+	assert(a.length == 5);
+	free(a.base);
+}
+
+
+	
 
 
 
