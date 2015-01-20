@@ -161,3 +161,20 @@ void test_count_should_count_the_number_of_elements_matching_the_criteria(){
 	assert(result == 2);		
 }
 
+void test_filter_should_filter_the_number_of_elements_matching_the_criteria(){
+	ArrayUtil array = create(sizeof(int),5);
+	int arr[] = {1,2,3,4,5},result,i,expected[] = {2,4};
+	void *destination;
+	int isEven(void *hint, void *item){
+		int *numberPtr = (int*)item;
+		return *numberPtr % 2 ? 0 : 1;
+	}
+	array.base = arr;
+	result = filter(array, isEven, null, &destination, 5);	
+	for (i = 0; i < 2; ++i)
+	{
+		assert(((int*)destination)[i] == expected[i]);
+	}
+	assert(result == 2);
+}
+
