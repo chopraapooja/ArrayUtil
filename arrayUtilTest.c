@@ -78,7 +78,7 @@ void test_create_should_set_the_length_and_typeSize_fields_of_array_to_the_value
 	ArrayUtil a = create(1,3);
 	assert(a.length == 3);
 	assert(a.typeSize == 1);
-	free(a.base);
+	dispose(a);
 }
 
 void test_create_the_array_contents_will_all_be_set_to_zero(){
@@ -88,7 +88,7 @@ void test_create_the_array_contents_will_all_be_set_to_zero(){
 	{
 		assert(((char*)a.base)[i] == 0);
 	}
-	free(a.base);
+	dispose(a);
 }
 
 void test_resize_should_grow_length_of_array_and_set_them_to_zero_when_new_size_is_more(){
@@ -100,7 +100,7 @@ void test_resize_should_grow_length_of_array_and_set_them_to_zero_when_new_size_
 	{
 		assert(((char*)a.base)[i] == 0);
 	}
-	free(a.base);
+	dispose(a);
 }
 
 
@@ -117,11 +117,6 @@ void test_resize_should_not_change_length_of_array_when_new_size_is_same_as_old_
 	int i;
 	a = resize(a,5);
 	assert(a.length == 5);
-	free(a.base);
+	dispose(a);
 }
-
-
-	
-
-
 

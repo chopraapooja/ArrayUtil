@@ -59,3 +59,7 @@ ArrayUtil resize(ArrayUtil array, int length) {
 	}
 }
 
+void dispose(ArrayUtil util){
+	free(util.base);
+}
+
