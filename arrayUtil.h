@@ -11,3 +11,4 @@ int areEqual(ArrayUtil a, ArrayUtil b);
 ArrayUtil resize(ArrayUtil array, int length);
 void dispose(ArrayUtil util);
 void* findFirst(ArrayUtil util, MatchFunc* match, void* hint);
+int count(ArrayUtil util, MatchFunc* match, void* hint);

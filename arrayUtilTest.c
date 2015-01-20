@@ -148,3 +148,16 @@ void test_findFirst_on_providing_matchFunc_isDivisble_with_3_should_give_the_fir
 	assert(*result == 3);
 }
 
+void test_count_should_count_the_number_of_elements_matching_the_criteria(){
+	ArrayUtil array = create(sizeof(int),5);
+	int arr[] = {1,2,3,4,5},result;
+
+	int isEven(void *hint, void *item){
+		int *numberPtr = (int*)item;
+		return *numberPtr % 2 ? 0 : 1;
+	}
+	array.base = arr;
+	result = count(array,isEven,'\0');
+	assert(result == 2);		
+}
+

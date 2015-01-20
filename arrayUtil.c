@@ -74,3 +74,16 @@ void* findFirst(ArrayUtil util, MatchFunc* match, void* hint){
 		}
 	}
 }
+
+int count(ArrayUtil util, MatchFunc* match, void* hint){
+	int i,doesMatch,counter=0;
+	void *result;
+	for (i = 0; i < util.length; ++i)
+	{
+		doesMatch = match(hint,util.base+(util.typeSize*i));
+		if(doesMatch){
+			counter++;
+		}
+	}	
+	return counter;
+}
