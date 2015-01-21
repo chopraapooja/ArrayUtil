@@ -1,7 +1,9 @@
 #include <assert.h>
 #include "arrayUtil.h"
-typedef char* String; 
+#define CHAR_SIZE sizeof(char)
+#define INT_SIZE sizeof(int)
 
+typedef char* String; 
 ArrayUtil util, resultUtil, expectedUtil;
 int sample[] = {1,2,3,4,5};
 //-----------------------------------------------Helper Functions --------------------------------
@@ -22,6 +24,12 @@ void increment(void* hint, void* sourceItem, void* destinationItem){
 	int *resultPtr = (int*)destinationItem;
 
 	*resultPtr = *numberPtr + *hintPtr;
+}
+
+void toChar(void* hint, void* sourceItem, void* destinationItem){
+	int *numberPtr = (int*)sourceItem;
+	int *charPtr = (int*)destinationItem;
+	*charPtr = *numberPtr;
 }
 //------------------------------------------------------------------------------------------------
 
@@ -215,6 +223,21 @@ void test_map_should_map_source_to_destination_using_the_provided_convert_functi
 	expectedUtil = (ArrayUtil){result, sizeof(int), 5};
 
 	map(util, resultUtil, increment, &hint);
+	
+	assert(areEqual(expectedUtil, resultUtil));
+	dispose(resultUtil);
+}
+
+
+void test_map_can_map_from_one_datatype_to_another(){
+	int hint = 1, input[] = {97,98,99,100}; 
+	char result[] = {'a','b','c','d'};
+	
+	util = (ArrayUtil){input, INT_SIZE, 4};
+	resultUtil = create(CHAR_SIZE, util.length);
+	expectedUtil = (ArrayUtil){result, CHAR_SIZE, util.length};
+
+	map(util, resultUtil, toChar, &hint);
 	
 	assert(areEqual(expectedUtil, resultUtil));
 	dispose(resultUtil);
