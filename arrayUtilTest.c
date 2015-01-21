@@ -2,7 +2,7 @@
 #include "arrayUtil.h"
 typedef char* String; 
 
-ArrayUtil util;
+ArrayUtil util, resultUtil;
 int sample = {1,2,3,4,5};
 //-----------------------------------------------Helper Functions --------------------------------
 int isEven(void *hint, void *item){
@@ -14,6 +14,14 @@ int isDivisible(void *hint, void *item){
 	int *numberPtr = (int*)item;
 	int *hintPtr = (int*)hint;
 	return *numberPtr % *hintPtr ? 0 : 1;
+}
+
+void increment(void* hint, void* sourceItem, void* destinationItem){
+	int *hintPtr = (int*)hint;
+	int *numberPtr = (int*)sourceItem;
+	int *resultPtr = (int*)destinationItem;
+
+	*resultPtr = *numberPtr + *hintPtr;
 }
 //------------------------------------------------------------------------------------------------
 
@@ -198,3 +206,4 @@ void test_filter_should_filter_those_elements_which_are_matching_given_the_crite
 	}
 	assert(result == 2);
 }
+

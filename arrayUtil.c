@@ -16,16 +16,9 @@ int areEqual(ArrayUtil a, ArrayUtil b){
 
 ArrayUtil create(int typeSize, int length){
 	ArrayUtil a;
-	int i,bytes = length*typeSize;
-
 	a.typeSize = typeSize;
 	a.length = length;
-	a.base = malloc(bytes);
-
-	for (i = 0; i < (bytes); ++i)
-	{
-		((char*)a.base)[i] = '\0';
-	}
+	a.base = calloc(length, typeSize);
 	return a;
 }
 
@@ -98,4 +91,19 @@ int filter(ArrayUtil util, MatchFunc* match, void* hint, void** destination, int
 	}	
 	*destination = result;
 	return counter;
+}
+
+void* traverse(ArrayUtil util,int index){
+	return util.base+(util.typeSize*index);
+}
+
+void map(ArrayUtil source, ArrayUtil destination, ConvertFunc* convert, void* hint){
+	int i;
+	void *this, *destinationItem;
+	destination = create(source.typeSize, source.length);
+	for (i = 0; i < source.length; ++i){
+		this = traverse(source, i);
+		destinationItem = traverse(destination, i);
+		convert(hint, this, destinationItem);	
+	}
 }

@@ -6,6 +6,7 @@ struct ArrayUtil {
 #define null '\0'
 typedef struct ArrayUtil ArrayUtil;
 typedef int MatchFunc(void *hint, void *item);
+typedef void ConvertFunc(void* hint, void* sourceItem, void* destinationItem);
 
 ArrayUtil create(int typeSize, int length);
 int areEqual(ArrayUtil a, ArrayUtil b); 
@@ -14,3 +15,4 @@ void dispose(ArrayUtil util);
 void* findFirst(ArrayUtil util, MatchFunc* match, void* hint);
 int count(ArrayUtil util, MatchFunc* match, void* hint);
 int filter(ArrayUtil util, MatchFunc* match, void* hint, void** destination, int maxItems );
+void map(ArrayUtil source, ArrayUtil destination, ConvertFunc* convert, void* hint);
