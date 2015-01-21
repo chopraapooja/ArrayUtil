@@ -242,3 +242,16 @@ void test_map_can_map_from_one_datatype_to_another(){
 	assert(areEqual(expectedUtil, resultUtil));
 	dispose(resultUtil);
 }
+
+void test_mapped_array_should_have_same_length_as_orignal_array(){
+	int hint = 1, result[] = {2,3,4,5,6};
+	
+	util = (ArrayUtil){sample, sizeof(int), 5};
+	resultUtil = create(util.typeSize, util.length);
+	expectedUtil = (ArrayUtil){result, sizeof(int), 5};
+
+	map(util, resultUtil, increment, &hint);
+	
+	assert(util.length == resultUtil.length);
+	dispose(resultUtil);	
+}
