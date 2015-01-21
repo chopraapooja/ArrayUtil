@@ -1,5 +1,46 @@
 #include <assert.h>
 #include "arrayUtil.h"
+typedef char* String; 
+typedef struct student student; 
+
+ArrayUtil util;
+
+struct student
+{
+	char *name;
+	int age;
+	float marks;
+};
+
+// void test_create_Structures_with_all_fields_NULL(){
+// 	student temp = {"",0,0.0};
+// 	student Student[1] = {temp};
+// 	ArrayUtil expected = {Student,sizeof(student),1};
+// 	util = create(sizeof(student),1);
+// 	assert(areEqual(expected,util));
+// };
+
+void test_resize_sets_new_elements_to_zero_in_double(){
+	double expectedArray[] = {1.0,0.0};
+	ArrayUtil b = {expectedArray,sizeof(double),2};
+	util = create(sizeof(double),1);
+	((double*)util.base)[0] = 1.0;
+	util = resize(util, 2);
+	assert(areEqual(b, util));
+}
+
+void test_resize_sets_new_elements_to_NULL(){
+	String expectedArray[] = {"digs",0};
+	String name[] = {"digs"};
+
+	ArrayUtil b = {expectedArray,sizeof(String),2};
+	util = create(sizeof(String),1);
+
+	memcpy(util.base, name, sizeof(String)*1);
+	util = resize(util, 2);
+
+	assert(areEqual(b, util));
+};
 
 void test_areEqual_should_return_1_when_both_comparable_arrays_are_same(){
 	ArrayUtil arr1, arr2;

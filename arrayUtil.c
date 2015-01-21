@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "arrayUtil.h"
 
 int areEqual(ArrayUtil a, ArrayUtil b){
@@ -28,9 +29,9 @@ ArrayUtil create(int typeSize, int length){
 	return a;
 }
 
-void setZero(void *ptr, int length){
+void setZero(void *ptr, int from ,int length){
 	int i;
-	for (i = 0; i < length; ++i)
+	for (i = from; i < length; ++i)
 	{
 		((char*)ptr)[i] = '\0';
 	}
@@ -40,7 +41,7 @@ ArrayUtil resize(ArrayUtil array, int length) {
 	int diffrence;
 	if(array.length < length){
 		array.base = realloc(array.base, length*array.typeSize);
-		setZero(array.base, length*array.typeSize);
+		setZero(array.base, array.length*array.typeSize, length*array.typeSize);
 		array.length = length;
 		return array;
 	}

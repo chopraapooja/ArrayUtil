@@ -1,7 +1,7 @@
 struct ArrayUtil {
 	void *base;
-	int length;
 	int typeSize;
+	int length;
 };
 #define null '\0'
 typedef struct ArrayUtil ArrayUtil;
