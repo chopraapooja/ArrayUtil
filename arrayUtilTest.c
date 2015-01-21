@@ -1,7 +1,7 @@
 #include <assert.h>
 #include "arrayUtil.h"
 
-void test_areEqual_should_return_1_when_both_comparable_arrays_are_of_same_length_typeSize_and_having_same_elements(){
+void test_areEqual_should_return_1_when_both_comparable_arrays_are_same(){
 	ArrayUtil arr1, arr2;
 	int a1[] = {1,2,3};
 	int a2[] = {1,2,3};
@@ -19,7 +19,7 @@ void test_areEqual_should_return_1_when_both_comparable_arrays_are_of_same_lengt
 	assert(areEqual(arr1, arr2) == 1);
 }
 
-void test_areEqual_should_return_0_when_both_comparable_arrays_are_of_same_length_typeSize_but_having_different_elements(){
+void test_areEqual_should_return_0_when_both_comparable_arrays_are_not_same(){
 	ArrayUtil arr1, arr2;
 	int a1[] = {1,2,3};
 	int a2[] = {1,2,0};
