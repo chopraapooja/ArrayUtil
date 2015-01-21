@@ -93,17 +93,16 @@ int filter(ArrayUtil util, MatchFunc* match, void* hint, void** destination, int
 	return counter;
 }
 
-void* traverse(ArrayUtil util,int index){
-	return util.base+(util.typeSize*index);
+void* traverse(ArrayUtil *util,int index){
+	return (*util).base+((*util).typeSize*index);
 }
 
 void map(ArrayUtil source, ArrayUtil destination, ConvertFunc* convert, void* hint){
 	int i;
 	void *this, *destinationItem;
-	destination = create(source.typeSize, source.length);
 	for (i = 0; i < source.length; ++i){
-		this = traverse(source, i);
-		destinationItem = traverse(destination, i);
+		this = traverse(&source, i);
+		destinationItem = traverse(&destination, i);
 		convert(hint, this, destinationItem);	
 	}
 }

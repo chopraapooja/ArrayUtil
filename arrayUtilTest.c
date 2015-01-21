@@ -2,8 +2,8 @@
 #include "arrayUtil.h"
 typedef char* String; 
 
-ArrayUtil util, resultUtil;
-int sample = {1,2,3,4,5};
+ArrayUtil util, resultUtil, expectedUtil;
+int sample[] = {1,2,3,4,5};
 //-----------------------------------------------Helper Functions --------------------------------
 int isEven(void *hint, void *item){
 	int *numberPtr = (int*)item;
@@ -207,3 +207,15 @@ void test_filter_should_filter_those_elements_which_are_matching_given_the_crite
 	assert(result == 2);
 }
 
+void test_map_should_map_source_to_destination_using_the_provided_convert_function(){
+	int hint = 1, result[] = {2,3,4,5,6};
+	
+	util = (ArrayUtil){sample, sizeof(int), 5};
+	resultUtil = create(util.typeSize, util.length);
+	expectedUtil = (ArrayUtil){result, sizeof(int), 5};
+
+	map(util, resultUtil, increment, &hint);
+	
+	assert(areEqual(expectedUtil, resultUtil));
+	dispose(resultUtil);
+}
