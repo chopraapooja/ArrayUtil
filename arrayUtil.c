@@ -82,11 +82,10 @@ int count(ArrayUtil util, MatchFunc* match, void* hint){
 	return counter;
 }
 
-int filter(ArrayUtil util, MatchFunc* match, void* hint, void** destination, int maxItems ){
+int filter(ArrayUtil util, MatchFunc* match, void* hint, void** destination, int maxItems){
 	int i,doesMatch,counter=0,j,bytes=0;
 	void *result=null,*this;
-	for (i = 0; i < util.length; ++i)
-	{
+	for (i = 0; i < util.length; ++i) {
 		this = util.base+(util.typeSize*i);
 		doesMatch = match(hint,this);
 		if(doesMatch){
@@ -98,5 +97,5 @@ int filter(ArrayUtil util, MatchFunc* match, void* hint, void** destination, int
 		}
 	}	
 	*destination = result;
-	return counter;	
+	return counter;
 }

@@ -1,24 +1,21 @@
 #include <assert.h>
 #include "arrayUtil.h"
 typedef char* String; 
-typedef struct student student; 
 
 ArrayUtil util;
+int sample = {1,2,3,4,5};
+//-----------------------------------------------Helper Functions --------------------------------
+int isEven(void *hint, void *item){
+	int *numberPtr = (int*)item;
+	return *numberPtr % 2 ? 0 : 1;
+}
 
-struct student
-{
-	char *name;
-	int age;
-	float marks;
-};
-
-// void test_create_Structures_with_all_fields_NULL(){
-// 	student temp = {"",0,0.0};
-// 	student Student[1] = {temp};
-// 	ArrayUtil expected = {Student,sizeof(student),1};
-// 	util = create(sizeof(student),1);
-// 	assert(areEqual(expected,util));
-// };
+int isDivisible(void *hint, void *item){
+	int *numberPtr = (int*)item;
+	int *hintPtr = (int*)hint;
+	return *numberPtr % *hintPtr ? 0 : 1;
+}
+//------------------------------------------------------------------------------------------------
 
 void test_resize_sets_new_elements_to_zero_in_double(){
 	double expectedArray[] = {1.0,0.0};
@@ -165,10 +162,6 @@ void test_findFirst_on_providing_matchFunc_isEven_should_give_the_first_even_ele
 	ArrayUtil array = create(sizeof(int),5);
 	int arr[] = {1,2,3,4,5},*result;
 
-	int isEven(void *hint, void *item){
-		int *numberPtr = (int*)item;
-		return *numberPtr % 2 ? 0 : 1;
-	}
 	array.base = arr;
 	result = (int*)findFirst(array,isEven,'\0');
 	assert(*result == 2);
@@ -178,12 +171,6 @@ void test_findFirst_on_providing_matchFunc_isEven_should_give_the_first_even_ele
 void test_findFirst_on_providing_matchFunc_isDivisble_with_3_should_give_the_first_element_found_tobe_divisble_by_3__in_utilArray(){
 	ArrayUtil array = create(sizeof(int),5);
 	int arr[] = {1,2,3,4,5},*result,divisor = 3;
-
-	int isDivisible(void *hint, void *item){
-		int *numberPtr = (int*)item;
-		int *hintPtr = (int*)hint;
-		return *numberPtr % *hintPtr ? 0 : 1;
-	}
 	array.base = arr;
 	result = (int*)findFirst(array,isDivisible,&divisor);
 	assert(*result == 3);
@@ -193,23 +180,16 @@ void test_count_should_count_the_number_of_elements_matching_the_criteria(){
 	ArrayUtil array = create(sizeof(int),5);
 	int arr[] = {1,2,3,4,5},result;
 
-	int isEven(void *hint, void *item){
-		int *numberPtr = (int*)item;
-		return *numberPtr % 2 ? 0 : 1;
-	}
+
 	array.base = arr;
 	result = count(array,isEven,'\0');
 	assert(result == 2);		
 }
 
-void test_filter_should_filter_the_number_of_elements_matching_the_criteria(){
+void test_filter_should_filter_those_elements_which_are_matching_given_the_criteria(){
 	ArrayUtil array = create(sizeof(int),5);
 	int arr[] = {1,2,3,4,5},result,i,expected[] = {2,4};
 	void *destination;
-	int isEven(void *hint, void *item){
-		int *numberPtr = (int*)item;
-		return *numberPtr % 2 ? 0 : 1;
-	}
 	array.base = arr;
 	result = filter(array, isEven, null, &destination, 5);	
 	for (i = 0; i < 2; ++i)
@@ -218,4 +198,3 @@ void test_filter_should_filter_the_number_of_elements_matching_the_criteria(){
 	}
 	assert(result == 2);
 }
-
