@@ -2,6 +2,7 @@
 #include "arrayUtil.h"
 #define CHAR_SIZE sizeof(char)
 #define INT_SIZE sizeof(int)
+#define SAMPLE_LENGTH 5
 
 typedef char* String; 
 ArrayUtil util, resultUtil, expectedUtil;
@@ -25,6 +26,12 @@ void increment(void* hint, void* sourceItem, void* destinationItem){
 
 	*resultPtr = *numberPtr + *hintPtr;
 }
+
+void decrement(void* hint, void* item){
+	int *number = (int*)item;
+	*number = *number - 1;
+}
+
 
 void toChar(void* hint, void* sourceItem, void* destinationItem){
 	int *numberPtr = (int*)sourceItem;
@@ -289,3 +296,8 @@ void test_map_should_keep_orignal_array_intact(){
 // 	assert(areEqual(expectedUtil, resultUtil));
 // 	dispose(resultUtil);
 // }
+
+void test_forEach(){
+	util = (ArrayUtil){sample, INT_SIZE, SAMPLE_LENGTH};
+	// forEach(util, decrement, 0);
+}

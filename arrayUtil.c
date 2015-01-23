@@ -110,3 +110,40 @@ void map(ArrayUtil source, ArrayUtil destination, ConvertFunc* convert, void* hi
 		convert(hint, this, destinationItem);	
 	}
 }
+
+void forEach(ArrayUtil util, OperationFunc* operation, void* hint){
+	int i;
+	void *this;
+	for (i = 0; i < util.length; ++i){
+		this = traverse(&util, i);
+		operation(hint, this);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
