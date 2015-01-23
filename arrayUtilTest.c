@@ -29,7 +29,8 @@ void increment(void* hint, void* sourceItem, void* destinationItem){
 
 void decrement(void* hint, void* item){
 	int *number = (int*)item;
-	*number = *number - 1;
+	int *hintPtr = (int*)hint;
+	*number = *number - *hintPtr;
 }
 
 
@@ -297,7 +298,12 @@ void test_map_should_keep_orignal_array_intact(){
 // 	dispose(resultUtil);
 // }
 
-void test_forEach(){
+void test_forEach_should_perform_given_operation_on_all_items_in_the_array(){
+	int expected[] = {0,1,2,3,4}, hint = 1;
+	
 	util = (ArrayUtil){sample, INT_SIZE, SAMPLE_LENGTH};
-	// forEach(util, decrement, 0);
+	expectedUtil = (ArrayUtil){expected, INT_SIZE, SAMPLE_LENGTH};
+
+	forEach(util, decrement, &hint);
+	assert(areEqual(util, expectedUtil) == 1);
 }
