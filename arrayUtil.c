@@ -41,7 +41,10 @@ ArrayUtil resize(ArrayUtil array, int length) {
 		return array;
 	}
 	else if(array.length > length){
+		temp = calloc(length, array.typeSize);
+		memcpy(temp, array.base, length*array.typeSize);
 		array.length = length;
+		array.base = temp;
 	}
 	return array;
 	
