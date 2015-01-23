@@ -32,18 +32,19 @@ void setZero(void *ptr, int from ,int length){
 
 ArrayUtil resize(ArrayUtil array, int length) {
 	int diffrence;
+	void *temp;
 	if(array.length < length){
-		array.base = realloc(array.base, length*array.typeSize);
-		setZero(array.base, array.length*array.typeSize, length*array.typeSize);
+		temp = calloc(length, array.typeSize);
+		memcpy(temp, array.base, array.length*array.typeSize);
 		array.length = length;
+		array.base = temp;
 		return array;
 	}
 	else if(array.length > length){
 		array.length = length;
-		return array;
-	}else{
-		return array;
 	}
+	return array;
+	
 }
 
 void dispose(ArrayUtil util){
@@ -74,12 +75,15 @@ int count(ArrayUtil util, MatchFunc* match, void* hint){
 	}	
 	return counter;
 }
+void* traverse(ArrayUtil *util,int index){
+	return (*util).base+((*util).typeSize*index);
+}
 
 int filter(ArrayUtil util, MatchFunc* match, void* hint, void** destination, int maxItems){
 	int i,doesMatch,counter=0,j,bytes=0;
 	void *result=null,*this;
 	for (i = 0; i < util.length; ++i) {
-		this = util.base+(util.typeSize*i);
+		this = traverse(&util, i); //util.base+(util.typeSize*i);
 		doesMatch = match(hint,this);
 		if(doesMatch){
 			counter++;
@@ -88,14 +92,11 @@ int filter(ArrayUtil util, MatchFunc* match, void* hint, void** destination, int
 				((char*) result)[bytes++] = ((char*)this)[j];
 			}
 		}
-	}	
+	}
 	*destination = result;
 	return counter;
 }
 
-void* traverse(ArrayUtil *util,int index){
-	return (*util).base+((*util).typeSize*index);
-}
 
 void map(ArrayUtil source, ArrayUtil destination, ConvertFunc* convert, void* hint){
 	int i;

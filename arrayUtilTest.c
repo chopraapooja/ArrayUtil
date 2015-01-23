@@ -31,6 +31,12 @@ void toChar(void* hint, void* sourceItem, void* destinationItem){
 	int *charPtr = (int*)destinationItem;
 	*charPtr = *numberPtr;
 }
+
+// void toStruct(void* hint, void* sourceItem, void* destinationItem){
+//   	int *structInfo = (int*)sourceItem;
+// 	ArrayUtil a = create(structInfo[0], structInfo[1]);
+// 	(ArrayUtil)*destinationItem = a;
+// }
 //------------------------------------------------------------------------------------------------
 
 void test_resize_sets_new_elements_to_zero_in_double(){
@@ -255,3 +261,31 @@ void test_mapped_array_should_have_same_length_as_orignal_array(){
 	assert(util.length == resultUtil.length);
 	dispose(resultUtil);	
 }
+
+void test_map_should_keep_orignal_array_intact(){
+	int hint = 1, input[] = {321,98,99,100}; 
+	char result[] = {'A','b','c','d'};
+	
+	util = (ArrayUtil){input, INT_SIZE, 4};
+	resultUtil = create(CHAR_SIZE, util.length);
+	expectedUtil = (ArrayUtil){result, CHAR_SIZE, util.length};
+
+	map(util, resultUtil, toChar, &hint);
+	
+	assert(areEqual(util, util));
+	dispose(resultUtil);
+}
+
+// void test_map_can_map_from_one_datatype_to_another(){
+// 	int hint = 1, input[][] = {{4,4}}; 
+// 	char result[] = {'a','b','c','d'};
+	
+// 	util = (ArrayUtil){input, INT_SIZE, 4};
+// 	resultUtil = create(CHAR_SIZE, util.length);
+// 	expectedUtil = (ArrayUtil){result, CHAR_SIZE, util.length};
+
+// 	map(util, resultUtil, toChar, &hint);
+	
+// 	assert(areEqual(expectedUtil, resultUtil));
+// 	dispose(resultUtil);
+// }
