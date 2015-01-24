@@ -9,6 +9,8 @@ typedef char* String;
 
 ArrayUtil util, resultUtil, expectedUtil;
 int sample[] = {1,2,3,4,5};
+int arrayOfArray[2][2] = {{1,2},{3,4}};
+
 //-----------------------------------------------Helper Functions --------------------------------
 void* add(void* hint, void* previousItem, void* item){
 	int *pv = (int*)previousItem, *sum;
@@ -57,6 +59,8 @@ void toChar(void* hint, void* sourceItem, void* destinationItem){
 //------------------------------------------------------------------------------------------------
 void setup(){
 	sample[0] = 1;	sample[1] = 2;	sample[2] = 3;	sample[3] = 4;	sample[4] = 5;
+	arrayOfArray[0][0] = 1; arrayOfArray[0][1] = 2;
+	arrayOfArray[1][0] = 3; arrayOfArray[1][1] = 4;
 }
 void test_resize_sets_new_elements_to_zero_in_double(){
 	double expectedArray[] = {1.0,0.0};
@@ -319,9 +323,28 @@ void test_forEach_should_perform_given_operation_on_all_items_in_the_array(){
 	assert(areEqual(util, expectedUtil) == 1);
 }
 
-void test_reduce_should_return_the_reduced_answer(){
-	int expected = 20,hint = NOTHING, init = 5, *result;
+void test_reduce_should_return_the_reduced_answer_by_suming_up_all_values_within_an_array(){
+	int expected = 15,hint = NOTHING, init = NOTHING, *result;
 	util = (ArrayUtil){sample, INT_SIZE, SAMPLE_LENGTH};
 	result = (int*)reduce(util, add, &hint, &init);
 	assert(*result==expected);
 }
+
+void test_reduce_should_return_the_reduced_answer_by_suming_up_all_values_within_an_array_and_initial_value(){
+	int expected = 20,hint = NOTHING, init = 5, *result;
+	util = (ArrayUtil){sample, INT_SIZE, SAMPLE_LENGTH};
+	result = (int*)reduce(util, add, &hint, &init);
+	assert(*result==expected);	
+}
+
+// void* flatten(void* hint, void* previousItem, void* item){
+// 	int *cv = (int*)item;
+
+// }
+
+// void test_flatten_an_array_of_arrays(){
+//  	int *result, hint = NOTHING, init = NOTHING;
+//  	util = (ArrayUtil){arrayOfArray, sizeof(int**), 2};
+//  	result = (int*)reduce(util, )
+
+// }
