@@ -338,13 +338,12 @@ void test_reduce_should_return_the_reduced_answer_by_suming_up_all_values_within
 }
 
 // void* flatten(void* hint, void* previousItem, void* item){
-// 	int *cv = (int*)item;
-
+// 	previousItem 
 // }
 
 // void test_flatten_an_array_of_arrays(){
-//  	int *result, hint = NOTHING, init = NOTHING;
+// 	int hint = NOTHING;
+// 	resultUtil = create(INT_SIZE, 0);
 //  	util = (ArrayUtil){arrayOfArray, sizeof(int**), 2};
-//  	result = (int*)reduce(util, )
-
+//  	reduce(util, flatten, &hint, &resultUtil);
 // }
