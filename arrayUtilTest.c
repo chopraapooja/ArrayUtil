@@ -3,11 +3,20 @@
 #define CHAR_SIZE sizeof(char)
 #define INT_SIZE sizeof(int)
 #define SAMPLE_LENGTH 5
+#define NOTHING 0
 
 typedef char* String; 
+
 ArrayUtil util, resultUtil, expectedUtil;
 int sample[] = {1,2,3,4,5};
 //-----------------------------------------------Helper Functions --------------------------------
+void* add(void* hint, void* previousItem, void* item){
+	int *pv = (int*)previousItem, *sum;
+	int *cv = (int*)item;
+	*pv = *pv + *cv;
+	return pv;
+}
+
 int isEven(void *hint, void *item){
 	int *numberPtr = (int*)item;
 	return *numberPtr % 2 ? 0 : 1;
@@ -46,7 +55,9 @@ void toChar(void* hint, void* sourceItem, void* destinationItem){
 // 	(ArrayUtil)*destinationItem = a;
 // }
 //------------------------------------------------------------------------------------------------
-
+void setup(){
+	sample[0] = 1;	sample[1] = 2;	sample[2] = 3;	sample[3] = 4;	sample[4] = 5;
+}
 void test_resize_sets_new_elements_to_zero_in_double(){
 	double expectedArray[] = {1.0,0.0};
 	ArrayUtil b = {expectedArray,sizeof(double),2};
@@ -306,4 +317,11 @@ void test_forEach_should_perform_given_operation_on_all_items_in_the_array(){
 
 	forEach(util, decrement, &hint);
 	assert(areEqual(util, expectedUtil) == 1);
+}
+
+void test_reduce_should_return_the_reduced_answer(){
+	int expected = 20,hint = NOTHING, init = 5, *result;
+	util = (ArrayUtil){sample, INT_SIZE, SAMPLE_LENGTH};
+	result = (int*)reduce(util, add, &hint, &init);
+	assert(*result==expected);
 }

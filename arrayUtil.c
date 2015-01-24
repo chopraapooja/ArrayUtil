@@ -2,6 +2,16 @@
 #include <string.h>
 #include "arrayUtil.h"
 
+void* reduce(ArrayUtil util, ReducerFunc* reducer, void* hint, void* intialValue){
+	int i;
+	void *this,*pv = intialValue;
+	for (i = 0; i < util.length; ++i){
+		this = traverse(&util, i);
+		pv = reducer(hint, pv, this);
+	}
+	return pv;
+}
+
 int areEqual(ArrayUtil a, ArrayUtil b){
 	int i, length = a.typeSize*a.length;
 	char *base1 = ((char*)a.base), *base2 = ((char*)b.base);
@@ -78,6 +88,7 @@ int count(ArrayUtil util, MatchFunc* match, void* hint){
 	}	
 	return counter;
 }
+
 void* traverse(ArrayUtil *util,int index){
 	return (*util).base+((*util).typeSize*index);
 }
@@ -100,7 +111,6 @@ int filter(ArrayUtil util, MatchFunc* match, void* hint, void** destination, int
 	return counter;
 }
 
-
 void map(ArrayUtil source, ArrayUtil destination, ConvertFunc* convert, void* hint){
 	int i;
 	void *this, *destinationItem;
@@ -119,31 +129,3 @@ void forEach(ArrayUtil util, OperationFunc* operation, void* hint){
 		operation(hint, this);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
