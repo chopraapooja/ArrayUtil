@@ -212,7 +212,6 @@ void test_findFirst_on_providing_matchFunc_isEven_should_give_the_first_even_ele
 	assert(*result == 2);
 }
 
-
 void test_findFirst_on_providing_matchFunc_isDivisble_with_3_should_give_the_first_element_found_tobe_divisble_by_3__in_utilArray(){
 	ArrayUtil array = create(sizeof(int),5);
 	int arr[] = {1,2,3,4,5},*result,divisor = 3;
@@ -221,28 +220,43 @@ void test_findFirst_on_providing_matchFunc_isDivisble_with_3_should_give_the_fir
 	assert(*result == 3);
 }
 
+void test_findLast_on_providing_matchFunc_isEven_should_give_the_last_even_element_found_in_utilArray(){
+	int *result;
+	util = (ArrayUtil){sample, INT_SIZE, 5};
+	result = (int*)findLast(util,isEven,null);
+	assert(*result == 4);
+}
+
 void test_count_should_count_the_number_of_elements_matching_the_criteria(){
 	ArrayUtil array = create(sizeof(int),5);
 	int arr[] = {1,2,3,4,5},result;
-
-
 	array.base = arr;
 	result = count(array,isEven,'\0');
 	assert(result == 2);		
 }
 
-void test_filter_should_filter_those_elements_which_are_matching_given_the_criteria(){
-	ArrayUtil array = create(sizeof(int),5);
-	int arr[] = {1,2,3,4,5},result,i,expected[] = {2,4};
-	void *destination;
-	array.base = arr;
-	result = filter(array, isEven, null, &destination, 5);	
-	for (i = 0; i < 2; ++i)
-	{
-		assert(((int*)destination)[i] == expected[i]);
-	}
-	assert(result == 2);
-}
+// void test_filter_should_filter_those_elements_which_are_matching_given_the_criteria(){
+// 	util = (ArrayUtil){sample, sizeof(int), 5};
+// 	int result,i,expected[] = {2,4};
+// 	void *destination;
+// 	array.base = arr;
+// 	result = filter(array, isEven, null, &destination, 5);	
+// 	for (i = 0; i < 2; ++i)
+// 	{
+// 		assert(((int*)destination)[i] == expected[i]);
+// 	}
+// 	assert(result == 2);
+// }
+
+// void test_filter_populate_destination_array_with_evenNumbers(){
+//     int maxItem=6;
+//     int *evens[maxItem];
+//     util1 = (ArrayUtil){(int[]){101,22,12,13},sizeof(int),4};
+   	 
+// 	 assertEqual(filter(util1,isEven,0,(void**)evens,maxItem),2);
+// 	 assertEqual(*(evens[0]),22);
+// 	 assertEqual(*(evens[1]),12);
+// }
 
 void test_map_should_map_source_to_destination_using_the_provided_convert_function(){
 	int hint = 1, result[] = {2,3,4,5,6};
@@ -256,8 +270,6 @@ void test_map_should_map_source_to_destination_using_the_provided_convert_functi
 	assert(areEqual(expectedUtil, resultUtil));
 	dispose(resultUtil);
 }
-
-
 void test_map_can_map_from_one_datatype_to_another(){
 	int hint = 1, input[] = {97,98,99,100}; 
 	char result[] = {'a','b','c','d'};

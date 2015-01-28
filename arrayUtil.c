@@ -64,27 +64,29 @@ void dispose(ArrayUtil util){
 	free(util.base);
 }
 
+void* findLast(ArrayUtil util, MatchFunc* match, void* hint){
+	int i;
+	void *this;
+	for (i = util.length-1; i >= 0; --i) {
+		this = traverse(&util, i);
+		if(match(hint,this)) return this;
+	}
+}
+
 void* findFirst(ArrayUtil util, MatchFunc* match, void* hint){
-	int i,doesMatch;
-	void *result;
+	int i;
+	void *this;
 	for (i = 0; i < util.length; ++i)
 	{
-		doesMatch = match(hint,util.base+(util.typeSize*i));
-		if(doesMatch){
-			return  util.base+(util.typeSize*i);
-		}
+		this = traverse(&util, i);
+		if(match(hint,this)) return this;
 	}
 }
 
 int count(ArrayUtil util, MatchFunc* match, void* hint){
 	int i,doesMatch,counter=0;
-	void *result;
-	for (i = 0; i < util.length; ++i)
-	{
-		doesMatch = match(hint,util.base+(util.typeSize*i));
-		if(doesMatch){
-			counter++;
-		}
+	for (i = 0; i < util.length; ++i){
+		match(hint,traverse(&util,i)) ? counter++ : counter;
 	}	
 	return counter;
 }

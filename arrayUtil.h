@@ -20,3 +20,4 @@ int filter(ArrayUtil util, MatchFunc* match, void* hint, void** destination, int
 void map(ArrayUtil source, ArrayUtil destination, ConvertFunc* convert, void* hint);
 void forEach(ArrayUtil util, OperationFunc* operation, void* hint);
 void* reduce(ArrayUtil util, ReducerFunc* reducer, void* hint, void* intialValue);
+void* traverse(ArrayUtil *util,int index);
